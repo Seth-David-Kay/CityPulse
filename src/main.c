@@ -563,6 +563,7 @@ static void app_update_and_render(Platform *platform) {
     bool reset_this_frame = false;
 
     static bool tutorial_mode = true;
+    if (platform->frame.window_size.y > platform->frame.window_size.x) tutorial_mode = false;
 
     ui_Flags bar_flags = (ui_Flags)(ui_X) | ui_Flag_DRAW_BACKGROUND | ui_Flag_DRAW_SHADOW;
     ui_Box *menubar = &(ui_Box){0};
@@ -931,7 +932,6 @@ static void app_update_and_render(Platform *platform) {
 
     ui_Flags axis = ui_X;
     if (platform->frame.window_size.y > platform->frame.window_size.x) axis = ui_Y;
-    if (platform->frame.window_size.y > platform->frame.window_size.x) tutorial_mode = false;
     ui_Box *rest = ui_push(ui, ui_root, axis, &g.ui_idle_style, 0);
     rest->size[ui_X] = rest->size[ui_Y] = (ui_Size){ .kind = ui_Size_OF_PARENT, .value = 1.f };
     {
