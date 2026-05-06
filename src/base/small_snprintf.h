@@ -1,4 +1,4 @@
-// https://github.com/felix-u 2026-04-06
+// https://github.com/F-u 2026-04-06
 // Public domain. NO WARRANTY - use at your own risk.
 
 #if !defined(SMALL_SNPRINTF_H)
@@ -243,7 +243,7 @@ SMALL_SNPRINTF_FUNCTION int small_vsnprintf(char *buffer, size_t buffer_size, co
                     break;
                 }
 
-                // NOTE(felix): this is the part responsible for only being able to represent integer parts up to UINT64T_MAX
+                // NOTE(F): this is the part responsible for only being able to represent integer parts up to UINT64T_MAX
                 double absolute_value = is_negative ? -floating : floating;
                 if (absolute_value > (double)(unsigned long long)(-1)) {
                     small_snprintf__write(buffer, buffer_size, &written, "(...)", 5);
@@ -253,7 +253,7 @@ SMALL_SNPRINTF_FUNCTION int small_vsnprintf(char *buffer, size_t buffer_size, co
                 small_snprintf__write_u64(buffer, buffer_size, &written, (unsigned long long)absolute_value, 10, padding, pad_char, is_uppercase);
 
                 if (precision > 0) {
-                    // TODO(felix): rounding
+                    // TODO(F): rounding
 
                     small_snprintf__write(buffer, buffer_size, &written, ".", 1);
 

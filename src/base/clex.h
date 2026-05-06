@@ -1,4 +1,4 @@
-// https://github.com/felix-u 2026-03-07
+// https://github.com/F-u 2026-03-07
 // Public domain. NO WARRANTY - use at your own risk
 
 #if !defined(CLEX_H)
@@ -53,7 +53,7 @@ typedef enum {
     clex_Token_OR             = '|' + clex_Token__DOUBLE_OPERATOR,
     clex_Token_Kind__DOUBLE_OPERATOR_END = clex_Token__DOUBLE_OPERATOR + 128,
 
-    // TODO(felix): ASCII order
+    // TODO(F): ASCII order
     clex_Token__ASSIGNMENT_OPERATOR,
     clex_Token_NOT_EQUALS            = '!' + clex_Token__ASSIGNMENT_OPERATOR,
     clex_Token_MODULO_ASSIGN         = '%' + clex_Token__ASSIGNMENT_OPERATOR,
@@ -284,7 +284,7 @@ CLEX_FUNCTION _Bool clex_lex(clex_Lexer *l) {
             }
 
             if (*next == 'b' || *next == 'B') {
-                CLEX_ASSERT(0 && "TODO(felix)");
+                CLEX_ASSERT(0 && "TODO(F)");
             }
 
             if (*next == 'x' || *next == 'X') {
@@ -298,18 +298,18 @@ CLEX_FUNCTION _Bool clex_lex(clex_Lexer *l) {
                 }
 
                 const char *hex_end = l->c;
-                // TODO(felix): suffixes
+                // TODO(F): suffixes
 
                 l->token = (clex_Token){
                     .kind = clex_Token_INTEGER,
                     .data = { .start = hex, .end = hex_end },
-                    // TODO(felix): hex flag
+                    // TODO(F): hex flag
                 };
                 return 1;
             }
 
             if ('1' <= *next && *next <= '7') {
-                CLEX_ASSERT(0 && "TODO(felix): octal");
+                CLEX_ASSERT(0 && "TODO(F): octal");
             }
 
             if (*next == '8' || *next == '9') goto error;
@@ -389,7 +389,7 @@ CLEX_FUNCTION _Bool clex_lex(clex_Lexer *l) {
             return 1;
         } break;
         case '\'': {
-            // TODO(felix): handle encoding prefix somewhere, probably in the identifier parsing logic
+            // TODO(F): handle encoding prefix somewhere, probably in the identifier parsing logic
 
             if (l->c + 2 >= l->end) goto error;
 
@@ -397,7 +397,7 @@ CLEX_FUNCTION _Bool clex_lex(clex_Lexer *l) {
             const char *character = l->c;
 
             if (*l->c == '\\') {
-                CLEX_ASSERT(0 && "TODO(felix): escape sequences");
+                CLEX_ASSERT(0 && "TODO(F): escape sequences");
             }
 
             const char *character_end = l->c + 1;
@@ -406,12 +406,12 @@ CLEX_FUNCTION _Bool clex_lex(clex_Lexer *l) {
             l->token = (clex_Token){
                 .kind = clex_Token_INTEGER,
                 .data = { .start = character, .end = character_end },
-                // TODO(felix): flag for character literal
+                // TODO(F): flag for character literal
             };
             return 1;
         } break;
         case '"': {
-            // TODO(felix): handle encoding prefix somewhere, probably in the identifier parsing logic
+            // TODO(F): handle encoding prefix somewhere, probably in the identifier parsing logic
             if (++l->c >= l->end) goto error;
 
             const char *string = l->c;
@@ -423,8 +423,8 @@ CLEX_FUNCTION _Bool clex_lex(clex_Lexer *l) {
 
                     switch (*(++l->c)) {
                         case '"': case '?': case '\\': case 'a': case 'b': case 'f': case 'n': case 'r': case 't': case 'v': break;
-                        case '0': CLEX_ASSERT(0 && "TODO(felix): octal digit escape sequence");
-                        case 'x': CLEX_ASSERT(0 && "TODO(felix): hex digit escape sequence");
+                        case '0': CLEX_ASSERT(0 && "TODO(F): octal digit escape sequence");
+                        case 'x': CLEX_ASSERT(0 && "TODO(F): hex digit escape sequence");
                         default: goto error;
                     }
                 }
@@ -436,7 +436,7 @@ CLEX_FUNCTION _Bool clex_lex(clex_Lexer *l) {
             l->token = (clex_Token){
                 .kind = clex_Token_STRING,
                 .data = { .start = string, .end = string_end },
-                // TODO(felix): prefix
+                // TODO(F): prefix
             };
             return 1;
         } break;
@@ -574,7 +574,7 @@ CLEX_FUNCTION _Bool clex_lex(clex_Lexer *l) {
         return 1;
     }
 
-    CLEX_ASSERT(0 && "TODO(felix)");
+    CLEX_ASSERT(0 && "TODO(F)");
 
     error:
     l->token = (clex_Token){0};

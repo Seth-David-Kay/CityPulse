@@ -6,7 +6,7 @@
 
 #define meta(...)
 
-#include <stdarg.h> // NOTE(felix): doesn't seem like anything can be done about this one
+#include <stdarg.h> // NOTE(F): doesn't seem like anything can be done about this one
 
 #if !defined(__bool_true_false_are_defined)
     #if defined(bool)
@@ -25,7 +25,7 @@
 #endif
 
 #if BASE_C_VERSION < 2011
-    // TODO(felix): is there a typedef hack we can do here?
+    // TODO(F): is there a typedef hack we can do here?
     #define _Static_assert(expression, message)
 #endif
 
@@ -61,16 +61,16 @@ _Static_assert(sizeof(f64) == 8, "");
 #endif
 
 #if BASE_OS == BASE_OS_LINUX
-    void exit(int); // TODO(felix): can remove?
-    void abort(void); // TODO(felix): own implementation to not depend on libc
-    void *calloc(size_t item_count, size_t item_size); // TODO(felix): remove once using virtual alloc arena
-    void free(void *pointer); // TODO(felix): remove once using virtual alloc arena
-    // TODO(felix): which of these can be removed in favour of doing direct syscalls?
+    void exit(int); // TODO(F): can remove?
+    void abort(void); // TODO(F): own implementation to not depend on libc
+    void *calloc(size_t item_count, size_t item_size); // TODO(F): remove once using virtual alloc arena
+    void free(void *pointer); // TODO(F): remove once using virtual alloc arena
+    // TODO(F): which of these can be removed in favour of doing direct syscalls?
         #include <fcntl.h>
         #include <unistd.h>
-    #include <stdio.h> // TODO(felix): only needed for FILE. remove!
+    #include <stdio.h> // TODO(F): only needed for FILE. remove!
 #elif BASE_OS == BASE_OS_MACOS
-    // TODO(felix): same notes as above
+    // TODO(F): same notes as above
 
     #define _WSTATUS(x)    ((x) & 0177)
     #define	_WSTOPPED      0177
@@ -170,7 +170,7 @@ _Static_assert(sizeof(f64) == 8, "");
     void   *malloc(size_t bytes);
     int     mkdir(const char *path, mode_t mode);
     int     pthread_create(pthread_t *, const pthread_attr_t *, void *(*start_routine)(void *), void *argument);
-    char   *realpath(const char *file_name, char *resolved_name); //  __DARWIN_EXTSN(realpath); // NOTE(felix): `__DARWIN_EXTSN` needed to silence "error: cannot apply asm label to function after its first use"
+    char   *realpath(const char *file_name, char *resolved_name); //  __DARWIN_EXTSN(realpath); // NOTE(F): `__DARWIN_EXTSN` needed to silence "error: cannot apply asm label to function after its first use"
     int     remove(const char *path);
     int     stat(const char *path, struct stat *buf);
     void    rewind(FILE *file);
@@ -191,7 +191,7 @@ _Static_assert(sizeof(f64) == 8, "");
     #define os_abort() ExitProcess(1)
     #define os_exit(code) ExitProcess(code)
 
-    // NOTE(felix): meta(link) does nothing yet, but by using it already I won't have to rewrite comments when it's implemented
+    // NOTE(F): meta(link) does nothing yet, but by using it already I won't have to rewrite comments when it's implemented
     meta(link "Kernel32.lib")
     WIN32_CALL(int)           CloseHandle(void *);
     struct _SECURITY_ATTRIBUTES;
@@ -277,15 +277,15 @@ _Static_assert(sizeof(f64) == 8, "");
     WIN32_CALL(void *) ShellExecuteA(void *handle, const char *operation, const char *file, const char *parameters, const char *directory, int show_command_count);
 #elif BASE_OS == BASE_OS_WASM
     typedef u64 size_t;
-    #define os_abort() // TODO(felix)
-    #define os_exit(code) // TODO(felix)
+    #define os_abort() // TODO(F)
+    #define os_exit(code) // TODO(F)
 #endif // BASE_OS
 
 #if COMPILER_CLANG || COMPILER_GCC // they share many builtins
     #define builtin_unreachable __builtin_unreachable()
     #define force_inline inline __attribute__((always_inline))
     #if BASE_OS == BASE_OS_WINDOWS
-        // TODO(felix): this is only for memcmp, etc. fix!
+        // TODO(F): this is only for memcmp, etc. fix!
         #include <string.h>
     #endif
 #endif
@@ -305,7 +305,7 @@ _Static_assert(sizeof(f64) == 8, "");
     #define force_inline inline __forceinline
 
 #elif COMPILER_STANDARD
-    // NOTE(felix): I don't even know why I have this. Getting my base layer working with a non-major compiler is not a priority
+    // NOTE(F): I don't even know why I have this. Getting my base layer working with a non-major compiler is not a priority
     #include <assert.h>
     #define builtin_assume(expr) assert(expr)
     #define breakpoint builtin_assume(false)
@@ -410,7 +410,7 @@ static void swap_remove_(Array_void *array, u64 index, u64 item_size);
     swap_remove_((Array_void *)(a), (i), sizeof *(a)->data); \
 } while (0)
 
-// NOTE(felix): these are function-like macros and so I would've liked them to be lowercase, but windows.h defines lowercase min,max and it's too much of a hassle to work out, especially with more than one translation unit. This is the simpler solution by far.
+// NOTE(F): these are function-like macros and so I would've liked them to be lowercase, but windows.h defines lowercase min,max and it's too much of a hassle to work out, especially with more than one translation unit. This is the simpler solution by far.
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 #define CLAMP_LOW MAX
@@ -525,7 +525,7 @@ struct Arena {
 
 static void  arena_deinit(Arena *arena);
 static Arena arena_from_memory(u8 *bytes, u64 count);
-static Arena arena_init(u64 initial_size_bytes); // TODO(felix): remove this function. A zeroed reserve+commit arena will be valid and will grow on demand
+static Arena arena_init(u64 initial_size_bytes); // TODO(F): remove this function. A zeroed reserve+commit arena will be valid and will grow on demand
 #define      arena_make(a, i, T) (T *)arena_make_((a), (i), sizeof(T), true)
 static void *arena_make_(Arena *arena, u64 item_count, u64 item_size, bool zero);
 static void *arena_push(Arena *arena, const void *data, u64 count);
@@ -717,15 +717,15 @@ static f32 tanhf_(f32 x) {
     #define tanhf  tanhf_
 #endif
 
-// TODO(felix): clean these up
+// TODO(F): clean these up
 
 #if COMPILER_MSVC
     #pragma intrinsic(abs, _abs64, fabs)
     #define abs_i32(x) abs(x)
     #define abs_i64(x) _abs64(x)
     #define abs_f64(x) fabs(x)
-    // NOTE(felix): because I got `warning C4163: 'fabsf': not available as an intrinsic function`
-    // NOTE(felix): corecrt_math.h defines fabsf as an inline function casting fabs to f32. Might be good to benchmark that approach versus what I'm doing here
+    // NOTE(F): because I got `warning C4163: 'fabsf': not available as an intrinsic function`
+    // NOTE(F): corecrt_math.h defines fabsf as an inline function casting fabs to f32. Might be good to benchmark that approach versus what I'm doing here
     static force_inline f32 fabsf(f32 x) { return x < 0 ? -x : x; }
 #elif COMPILER_CLANG || COMPILER_GCC
     #define INFINITY __builtin_inff()
@@ -1204,7 +1204,7 @@ struct ui_Box {
 typedef void (ui_text_measure_function)(void *user_data, const char *string, int length, ui_Style style, f32 size[2]);
 
 typedef struct {
-    App_Frame_Info *frame; // TODO(felix): remove
+    App_Frame_Info *frame; // TODO(F): remove
     void *user_data;
     ui_text_measure_function *measure_text;
     _Bool input_blocked;
@@ -1262,7 +1262,7 @@ static force_inline bool assert_expression(bool value) {
     return true;
 }
 
-// TODO(felix): replace with metaprogram lib specifier
+// TODO(F): replace with metaprogram lib specifier
 #if BASE_OS == BASE_OS_WINDOWS
     #pragma comment(lib, "kernel32.lib")
     #pragma comment(lib, "shell32.lib") // needed by os_get_arguments
@@ -1327,7 +1327,7 @@ static const char **os_get_arguments(Arena *arena, u64 *out_count) {
             u64 length = 1;
             while (argument_utf16[length] != 0) length += 1;
 
-            // TODO(felix): convert to UTF-8, not ascii
+            // TODO(F): convert to UTF-8, not ascii
             char *argument = arena_make(arena, length + 1, char);
             for (u64 j = 0; j < length; j += 1) {
                 u16 wide_character = argument_utf16[j];
@@ -1373,7 +1373,7 @@ static void reserve_exactly_(Arena *arena, Array_void *a, u64 item_size, u64 new
     u64 byte_count = new_capacity * item_size;
     assert(byte_count >= new_capacity); // overflow
 
-    // TODO(felix): assert the array was allocated on the arena passed in, unless I can think of any situation where it'd be useful for that not to be true
+    // TODO(F): assert the array was allocated on the arena passed in, unless I can think of any situation where it'd be useful for that not to be true
     void *raw = arena_make_(arena, byte_count, 1, false);
     memcpy(raw, a->data, a->count * item_size);
 
@@ -1417,9 +1417,9 @@ static Arena arena_from_memory(u8 *bytes, u64 count) {
 static Arena arena_init(u64 initial_size_bytes) {
     Arena arena = {0};
 
-    // TODO(felix): switch to os_heap_allocate and os_heap_free in these functions as the fallback, since those already do the right os-specific thing
+    // TODO(F): switch to os_heap_allocate and os_heap_free in these functions as the fallback, since those already do the right os-specific thing
 
-    // TODO(felix): switch to reserve+commit with (virtually) no limit: reserve something like 64gb and commit pages as needed
+    // TODO(F): switch to reserve+commit with (virtually) no limit: reserve something like 64gb and commit pages as needed
     #if BASE_OS == BASE_OS_WINDOWS
     {
         enum { heap_zero_memory = 8 }; // https://learn.microsoft.com/en-us/windows/win32/api/heapapi/nf-heapapi-heapalloc
@@ -1437,9 +1437,9 @@ static Arena arena_init(u64 initial_size_bytes) {
         if (wasm_heap_pointer == 0) wasm_heap_pointer = &__heap_base;
 
         arena.mem = wasm_heap_pointer;
-        // TODO(felix): implementation using memory.grow?
+        // TODO(F): implementation using memory.grow?
 
-        // TODO(felix): don't hardcode limit. Note this has to match wasm linker flags!
+        // TODO(F): don't hardcode limit. Note this has to match wasm linker flags!
         ensure((u64)(wasm_heap_pointer - &__heap_base) + initial_size_bytes <= 134217728);
         wasm_heap_pointer += initial_size_bytes;
 
@@ -1452,7 +1452,7 @@ static Arena arena_init(u64 initial_size_bytes) {
 
     if (arena.mem == 0) panic("arena_init failure (requested %llu bytes)", initial_size_bytes);
     arena.capacity = initial_size_bytes;
-    // TODO(felix): poison with debug byte when asan off
+    // TODO(F): poison with debug byte when asan off
     asan_poison_memory_region(arena.mem, arena.capacity);
     return arena;
 }
@@ -2089,7 +2089,7 @@ static cpu_draw_Font cpu_draw_font_from_bdf(const void *bdf, u64 bdf_size) {
 }
 
 static V2 cpu_draw_platform_measure_text(const cpu_draw_Font *font, String text, f32 font_size) {
-    // TODO(felix)
+    // TODO(F)
     assert(font->height == (int)roundf(font_size));
 
     int width = 0;
@@ -2215,7 +2215,7 @@ static void cpu_draw_commands(cpu_draw_Surface surface, const cpu_draw_Font *fon
                         cpu_draw_rectangle(surface, tl[0], tl[1], bl[0] + thickness, bl[1], border_color);
                         cpu_draw_rectangle(surface, tr[0] - thickness, tr[1], br[0], br[1], border_color);
                     } else {
-                        // TODO(felix): don't assume border thickness rounds to 1
+                        // TODO(F): don't assume border thickness rounds to 1
                         cpu_draw_line(surface, tl[0], tl[1], tr[0], tr[1], border_color);
                         cpu_draw_line(surface, tr[0], tr[1], br[0], br[1], border_color);
                         cpu_draw_line(surface, br[0], br[1], bl[0], bl[1], border_color);
@@ -2224,7 +2224,7 @@ static void cpu_draw_commands(cpu_draw_Surface surface, const cpu_draw_Font *fon
                 }
             } break;
             case Draw_Kind_LINE: {
-                assert(c->line.thickness == 1.f); // TODO(felix)
+                assert(c->line.thickness == 1.f); // TODO(F)
                 int start_x = (int)(c->position.x + 0.5f);
                 int start_y = (int)(c->position.y + 0.5f);
                 int end_x = (int)(c->line.end.x + 0.5f);
@@ -2474,7 +2474,7 @@ static void *os_heap_allocate(u64 byte_count) {
     #elif BASE_OS == BASE_OS_WASM
     {
         (void)byte_count;
-        panic("TODO(felix)");
+        panic("TODO(F)");
     }
     #else
         #error "unsupported OS"
@@ -2492,7 +2492,7 @@ static void os_heap_free(void *pointer) {
     #elif BASE_OS == BASE_OS_WASM
     {
         (void)pointer;
-        panic("TODO(felix)");
+        panic("TODO(F)");
     }
     #else
         #error "unsupported OS"
@@ -2736,8 +2736,8 @@ static u32 os_process_run(Arena scratch, const char **arguments, const char *dir
 }
 
 static void os_write_console(const char *bytes, u64 count) {
-    // TODO(felix): stderr support
-    // NOTE(felix): can't use assert in this function because panic() will call os_write_console, so we'll end up with a recursively failing assert and stack overflow. Instead, use `if (!condition) { breakpoint; abort(); }`
+    // TODO(F): stderr support
+    // NOTE(F): can't use assert in this function because panic() will call os_write_console, so we'll end up with a recursively failing assert and stack overflow. Instead, use `if (!condition) { breakpoint; abort(); }`
     #if BASE_OS == BASE_OS_WINDOWS
     {
         #if WINDOWS_SUBSYSTEM_WINDOWS
@@ -2849,7 +2849,7 @@ static const char *build_linker_initial_command[Build_Linker_COUNT][BASE_OS_COUN
         "-nologo",
         "-machine:X64",
         "-incremental:no",
-        "-opt:ref", // TODO(felix): move to release flags and add no_ variants to debug flags
+        "-opt:ref", // TODO(F): move to release flags and add no_ variants to debug flags
         "-opt:icf",
         "-fixed",
         0,
@@ -2875,7 +2875,7 @@ static const char *build_linker_initial_command[Build_Linker_COUNT][BASE_OS_COUN
         "--target=wasm32",
         "-nostdlib",
         "-Wl,--no-entry",
-        "-Wl,--allow-undefined", // NOTE(felix): consider --allow-undefined-file for explicit whitelist
+        "-Wl,--allow-undefined", // NOTE(F): consider --allow-undefined-file for explicit whitelist
         "-Wl,--export=platform__get_draw_surface_pointer",
         "-Wl,--export=platform__get_temp_js_string_buffer",
         "-Wl,--export=platform__on_key_down",
@@ -2886,9 +2886,9 @@ static const char *build_linker_initial_command[Build_Linker_COUNT][BASE_OS_COUN
         "-Wl,--export=platform__quit",
         "-Wl,--export=platform__start",
         "-Wl,--export=platform__update_and_render",
-        "-Wl,--initial-memory=134217728", // 128mb, but TODO(felix): make configurable
+        "-Wl,--initial-memory=134217728", // 128mb, but TODO(F): make configurable
         "-Wl,--stack-first",
-        "-Wl,-z,stack-size=1048576", // NOTE(felix): 1mb matches windows. I ran into stack overflow on macOS but not on Windows for some reason--on the same project, in the same browser
+        "-Wl,-z,stack-size=1048576", // NOTE(F): 1mb matches windows. I ran into stack overflow on macOS but not on Windows for some reason--on the same project, in the same browser
         0,
     },
 };
@@ -2910,8 +2910,8 @@ static const char *build_compiler_mode_flags[Build_Mode_COUNT][Build_Compiler_CO
             "-O0",
             0,
         },
-        // NOTE(felix): with clang for wasm, ubsan traps with no stack trace, which at the stage in WASM platform development I'm at while writing this, gets in the way of the stack traces for my `panic()`s in C code.
-        // TODO(felix): make this configurable - the sanitisers are helpful too
+        // NOTE(F): with clang for wasm, ubsan traps with no stack trace, which at the stage in WASM platform development I'm at while writing this, gets in the way of the stack traces for my `panic()`s in C code.
+        // TODO(F): make this configurable - the sanitisers are helpful too
         [Build_Compiler_CLANG][BASE_OS_WASM] = {
             "-fsanitize=undefined",
             "-fsanitize-trap",
@@ -3044,7 +3044,7 @@ static const char build_wasm_html_file[] = STRINGIFY(
             const canvas = document.getElementById("wasm_canvas");
 
             const offscreen = document.createElement("canvas");
-            // NOTE(felix): these have to match the max values on the C side!
+            // NOTE(F): these have to match the max values on the C side!
             offscreen.width = 1920;
             offscreen.height = 1200;
             const offscreen_context = offscreen.getContext("2d");
@@ -3077,7 +3077,7 @@ static const char build_wasm_html_file[] = STRINGIFY(
                 },
             } };
 
-            // TODO(felix): make .wasm file name changeable in build
+            // TODO(F): make .wasm file name changeable in build
             const wasm = await WebAssembly.instantiateStreaming(fetch("module.wasm"), imports);
             const exports = wasm.instance.exports;
 
@@ -3193,7 +3193,7 @@ static u32 build_default_everything(Arena scratch, const char *program_name, u8 
     bool meta_link_crt_override = false;
     bool meta_link_crt_override_value = false;
 
-    // TODO(felix): once we have a working preprocessor this hardcoded logic shouldn't be necessary
+    // TODO(F): once we have a working preprocessor this hardcoded logic shouldn't be necessary
 
     clex_Lexer lexer = clex_init(code.data, &code.data[code.count], 0);
     while (clex_lex(&lexer)) {
@@ -3303,7 +3303,7 @@ static u32 build_default_everything(Arena scratch, const char *program_name, u8 
 
             if (!build_eat_token(&lexer, ')', "error: expected ')' closing meta(...) block")) return 1;
 
-            // TODO(felix): get actual type info once we've got a C parser
+            // TODO(F): get actual type info once we've got a C parser
 
             String names[2] = {0};
             for (u64 i = 0; i < 2; i += 1) {
@@ -3350,7 +3350,7 @@ static u32 build_default_everything(Arena scratch, const char *program_name, u8 
             if (embed_via_object) {
                 static bool embedded_once_already = false;
                 if (embedded_once_already && embed_via_object) {
-                    log_error("TODO(felix): support embedding multiple files in object files");
+                    log_error("TODO(F): support embedding multiple files in object files");
                     return 1;
                 }
                 embedded_once_already = true;
@@ -3431,7 +3431,7 @@ static u32 build_default_everything(Arena scratch, const char *program_name, u8 
 
                     u8 byte = (u8)input.data[i];
 
-                    // NOTE(felix): this is much faster than string_builder_print in a hot, unoptimised loop. it is equivalent to:
+                    // NOTE(F): this is much faster than string_builder_print in a hot, unoptimised loop. it is equivalent to:
                     // string_builder_print(&metaprogram_code, "0x%c%c,", chars[byte >> 4], chars[byte & 0x0f]);
                     byte_string[2] = chars[byte >> 4];
                     byte_string[3] = chars[byte & 0x0f];
@@ -3486,7 +3486,7 @@ static u32 build_default_everything(Arena scratch, const char *program_name, u8 
         if (!os_write_entire_file(file, metaprogram_code.data, metaprogram_code.count)) return 1;
     }
 
-    // TODO(felix): should be handled by metaprogram
+    // TODO(F): should be handled by metaprogram
     String sokol_platform = S("base_platform_sokol");
     const char *sokol_code_path = cstring_print(&scratch, "%sbase%c%S.c", source_folder, path_separator, platform);
     bool using_sokol_platform = string_equals(platform, sokol_platform);
@@ -3518,7 +3518,7 @@ static u32 build_default_everything(Arena scratch, const char *program_name, u8 
         link_crt = target_os == BASE_OS_MACOS;
     }
 
-    // TODO(felix): should be handled by metaprogram
+    // TODO(F): should be handled by metaprogram
     const char *include_paths[] = {
         cstring_print(&scratch, "-I%s", dependency_folder),
         cstring_print(&scratch, "-I%s", source_folder),
@@ -3535,8 +3535,8 @@ static u32 build_default_everything(Arena scratch, const char *program_name, u8 
     Build_Linker linker = compiler == Build_Compiler_CLANG ? Build_Linker_CLANG : Build_Linker_MSVC;
     bool use_asan = link_crt && build_mode == Build_Mode_DEBUG;
     if (use_asan && linker == Build_Linker_CLANG && target_os == BASE_OS_WINDOWS) {
-        // NOTE(felix): for some reason with clang I can only get an asan-enabled executable to run if I copy clang_rt.asan_dynamic-x86_64.dll to the build directory.
-        // TODO(felix): implement logic for finding C:\Program Files\LLVM\lib\clang\[VERSION]\lib\windows\[asan dll], so we can do this
+        // NOTE(F): for some reason with clang I can only get an asan-enabled executable to run if I copy clang_rt.asan_dynamic-x86_64.dll to the build directory.
+        // TODO(F): implement logic for finding C:\Program Files\LLVM\lib\clang\[VERSION]\lib\windows\[asan dll], so we can do this
         // OR it's possible this is a clang/msvc version mismatch since there shouldn't be a difference
         print("info: disabling asan with clang on windows (see base.h, line %llu)\n", __LINE__ - 2);
         use_asan = false;
@@ -3547,7 +3547,7 @@ static u32 build_default_everything(Arena scratch, const char *program_name, u8 
         Os_Process_Flag_PRINT_EXIT_CODE |
         Os_Process_Flag_PRINT_EXECUTION_TIME;
 
-    // TODO(felix): should be handled by metaprogram
+    // TODO(F): should be handled by metaprogram
     if (using_sokol_platform) {
         const char *shader_file = cstring_print(&scratch, "%sshader.c", source_folder);
         fs_remove_file(shader_file);
@@ -3599,7 +3599,7 @@ static u32 build_default_everything(Arena scratch, const char *program_name, u8 
 
         bool should_compile = object->code_path != 0;
 
-        // TODO(felix): handle via metaprogram. can use same caching mechanism as build.c once we have it
+        // TODO(F): handle via metaprogram. can use same caching mechanism as build.c once we have it
         if (should_compile) {
             bool is_sokol = cstring_equals(object->code_path, sokol_code_path);
             if (is_sokol) {
@@ -3623,7 +3623,7 @@ static u32 build_default_everything(Arena scratch, const char *program_name, u8 
 
             build_push_arguments(&scratch, &compile, build_compiler_initial_command[compiler]);
 
-            // TODO(felix): should be handled by reading meta() annotations
+            // TODO(F): should be handled by reading meta() annotations
             if (target_os == BASE_OS_WASM) {
                 assert(compiler == Build_Compiler_CLANG);
 
@@ -3689,7 +3689,7 @@ static u32 build_default_everything(Arena scratch, const char *program_name, u8 
             } else {
                 if (linker == Build_Linker_MSVC) {
                     push(&scratch, &link, "-subsystem:console");
-                    // TODO(felix): subsystem:windows and entry:main don't work currently (silent crash). I'm pretty sure this has to do with the entrypoint being set incorrectly. I'm also not sure about the WINDOWS_SUBSYSTEM_[...] #defines in base_context.h
+                    // TODO(F): subsystem:windows and entry:main don't work currently (silent crash). I'm pretty sure this has to do with the entrypoint being set incorrectly. I'm also not sure about the WINDOWS_SUBSYSTEM_[...] #defines in base_context.h
                     // push(&link, "-subsystem:windows");
                     if (link_crt) {
                         // push(&link, "-entry:main");
@@ -3698,7 +3698,7 @@ static u32 build_default_everything(Arena scratch, const char *program_name, u8 
                 }
             }
 
-            // TODO(felix): handle in metaprogram
+            // TODO(F): handle in metaprogram
             if (!link_crt) switch (compiler) {
                 case Build_Compiler_MSVC: push(&scratch, &link, "-entry:entrypoint"); break;
                 case Build_Compiler_CLANG: {
@@ -4009,7 +4009,7 @@ static ui_Box *ui_pushv(ui_State *ui, ui_Box *parent, ui_Flags flags, const ui_S
     if (keyed) {
         const char *format = 0;
         {
-            // TODO(felix): not thread-safe, move to ui_State
+            // TODO(F): not thread-safe, move to ui_State
             static char format_buffer[UI_MAX_STRING_LENGTH];
 
             int written = UI_VSNPRINTF(format_buffer, sizeof format_buffer, format_c, arguments);
@@ -4049,7 +4049,7 @@ static ui_Box *ui_pushv(ui_State *ui, ui_Box *parent, ui_Flags flags, const ui_S
 
         int hash_string_length = 0;
         {
-            // TODO(felix): not thread-safe, move to ui_State
+            // TODO(F): not thread-safe, move to ui_State
             static char hash_buffer[UI_MAX_STRING_LENGTH];
 
             int hash_cursor = hash_left_start;
@@ -4248,13 +4248,13 @@ static ui_Box *ui_slider(ui_State *ui, ui_Box *parent, ui_Flags slider_axis, flo
     slider_style.child_gap = 0;
     slider_style.border_radius = style.radius;
 
-    // TODO(felix): remove usage of String type
+    // TODO(F): remove usage of String type
     String formatted = {0};
 
     va_list arguments;
     va_start(arguments, format);
     {
-        // TODO(felix): not thread-safe, move to ui_State
+        // TODO(F): not thread-safe, move to ui_State
         static char format_buffer[UI_MAX_STRING_LENGTH];
 
         int written = UI_VSNPRINTF(format_buffer, sizeof format_buffer, format, arguments);

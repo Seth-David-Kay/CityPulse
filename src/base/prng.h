@@ -1,4 +1,4 @@
-// https://github.com/felix-u 2026-02-12
+// https://github.com/F-u 2026-02-12
 // Public domain. NO WARRANTY - use at your own risk.
 
 #if !defined(PRNG_H)

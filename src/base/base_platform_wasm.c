@@ -156,7 +156,7 @@ void platform__update_and_render(f32 window_width, f32 window_height, f32 mouse_
     frame->seconds_since_last_frame = (f32)time_averaged_sample_elapsed_seconds(&sampler);
     frame->seconds_since_last_frame = CLAMP_HIGH(0.1f, frame->seconds_since_last_frame);
 
-    // NOTE(felix): these have to match the values on the JS side!
+    // NOTE(F): these have to match the values on the JS side!
     i32 max_virtual_width = 1920;
     i32 max_virtual_height = 1200;
 

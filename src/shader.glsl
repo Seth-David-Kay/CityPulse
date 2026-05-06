@@ -5,11 +5,11 @@
 @ctype mat3 M3
 @ctype mat4 M4
 
-// NOTE(felix): for WebGL, a uniform block cannot have more than 16 members
+// NOTE(F): for WebGL, a uniform block cannot have more than 16 members
 @block common_uniform_block
 {
-    mat4 model; // NOTE(felix): this should be mat3 but I was running into an alignment bug (?) with shdc
-    mat4 inverse_model; // NOTE(felix): likewise
+    mat4 model; // NOTE(F): this should be mat3 but I was running into an alignment bug (?) with shdc
+    mat4 inverse_model; // NOTE(F): likewise
     vec2 framebuffer_size;
     vec4 color; // also acts as top_left_color for below
 

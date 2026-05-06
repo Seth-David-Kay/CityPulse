@@ -1,4 +1,4 @@
-// https://github.com/felix-u 2026-04-16
+// https://github.com/F-u 2026-04-16
 // Public domain. NO WARRANTY - use at your own risk.
 
 #if !defined(CPU_DRAW_H)
@@ -96,7 +96,7 @@ CPU_DRAW_FUNCTION void cpu_draw_triangle_interpolate(cpu_draw_Surface surface, i
 CPU_DRAW_FUNCTION void cpu_draw_line(cpu_draw_Surface surface, int start_x, int start_y, int end_x, int end_y, unsigned color) {
     // Reference: https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
 
-    // TODO(felix): investigate possibility of hoisting bounds check out of loop
+    // TODO(F): investigate possibility of hoisting bounds check out of loop
 
     _Bool steep = CPU_DRAW__ABS(end_y - start_y) > CPU_DRAW__ABS(end_x - start_x);
     if (steep) {
@@ -229,7 +229,7 @@ CPU_DRAW_FUNCTION void cpu_draw_rectangle_rotated(cpu_draw_Surface surface, int 
 CPU_DRAW_FUNCTION void cpu_draw_rounded_rectangle(cpu_draw_Surface surface, int left, int top, int right, int bottom, unsigned fill_color, unsigned border_color, int border_radius, int border_width) {
     cpu_draw_sdf_corners(surface, left, top, right, bottom, fill_color, border_color, border_radius, border_width);
 
-    // TODO(felix): bound here, then use non-bounds-checked cpu_draw function variants below
+    // TODO(F): bound here, then use non-bounds-checked cpu_draw function variants below
 
     int in_left = left + border_radius;
     int in_right = right - border_radius;
@@ -291,7 +291,7 @@ CPU_DRAW_FUNCTION void cpu_draw_sdf_corners(cpu_draw_Surface surface, int left, 
 }
 
 CPU_DRAW_FUNCTION void cpu_draw_sprite_1bit(cpu_draw_Surface surface, int x, int y, cpu_draw_Sprite sprite, unsigned color) {
-    // TODO(felix): move bounds checks outside loop
+    // TODO(F): move bounds checks outside loop
     for (int row = 0; row < (int)sprite.height; row += 1) {
         for (int column = 0; column < (int)sprite.width; column += 1) {
             unsigned char bits = sprite.bytes[row * CPU_DRAW_SPRITE_MAX_WIDTH_OVER_8 + column / 8];
@@ -363,7 +363,7 @@ CPU_DRAW_FUNCTION void cpu_draw_text(cpu_draw_Surface surface, const cpu_draw_Fo
             for (int row = 0; row < glyph.bound_height; row += 1) {
                 int y = top + font->ascent - glyph.bound_bottom - glyph.bound_height + row;
                 for (int column = 0; column < glyph.bound_width; column += 1) {
-                    // TODO(felix): move bounds check outside
+                    // TODO(F): move bounds check outside
                     int local_x = x + glyph.bound_left + column;
 
                     _Bool in_bounds = (surface.clip_left <= local_x && local_x < surface.clip_right);
@@ -454,7 +454,7 @@ CPU_DRAW_FUNCTION void cpu_draw_triangle_interpolate(cpu_draw_Surface surface, i
             _Bool outside = alpha < 0 || beta < 0 || gamma < 0;
             if (outside) continue;
 
-            // TODO(felix): is there fast integer-based interpolation we can do?
+            // TODO(F): is there fast integer-based interpolation we can do?
             unsigned interpolated[4];
             for (int i = 0; i < 4; i += 1) {
                 interpolated[i] = (unsigned)(alpha * channels[0][i] + beta * channels[1][i] + gamma * channels[2][i]);

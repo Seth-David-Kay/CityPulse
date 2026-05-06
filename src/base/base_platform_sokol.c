@@ -1,4 +1,4 @@
-// NOTE(felix): useful resources for using sokol:
+// NOTE(F): useful resources for using sokol:
 // https://floooh.github.io/sokol-html5/
 // https://zeromake.github.io/learnopengl-examples/
 
@@ -42,15 +42,15 @@
     typedef u64 uint64_t;
 #endif
 
-// TODO(felix): a metaprogram "#include capture" system would let us override the system directories to provide our own stubs for stdint, etc.
+// TODO(F): a metaprogram "#include capture" system would let us override the system directories to provide our own stubs for stdint, etc.
 
-#include "sokol/sokol_gfx.h" // NOTE(felix): guarded 3 stdlib includes starting on line 1927, and 3 more starting line 5219
-#include "sokol/sokol_gl.h" // NOTE(felix): commented out 3 stdlib includes starting on line 697
+#include "sokol/sokol_gfx.h" // NOTE(F): guarded 3 stdlib includes starting on line 1927, and 3 more starting line 5219
+#include "sokol/sokol_gl.h" // NOTE(F): commented out 3 stdlib includes starting on line 697
 
-#include "sokol/sokol_app.h" // NOTE(felix): commented out 3 stdlib includes on line 1295
+#include "sokol/sokol_app.h" // NOTE(F): commented out 3 stdlib includes on line 1295
 #include "fontstash/fontstash.h"
 
-#include "sokol/sokol_fontstash.h" // NOTE(felix): commented out the 3 stdlib includes on line 187
+#include "sokol/sokol_fontstash.h" // NOTE(F): commented out the 3 stdlib includes on line 187
 #include "sokol/sokol_glue.h"
 
 #if COMPILER_CLANG
@@ -83,7 +83,7 @@ static void sokol_event(const sapp_event *event, void *user_data) {
     App_Frame_Info *info = &platform->base.frame;
 
     App_Key key_code = 0;
-    // NOTE(felix): up to 96 (ASCII grave '`'), both Sokol and us use the corresponding ASCII value
+    // NOTE(F): up to 96 (ASCII grave '`'), both Sokol and us use the corresponding ASCII value
     if (event->key_code <= '`')  {
         key_code = (App_Key)event->key_code;
     } else switch (event->key_code) {

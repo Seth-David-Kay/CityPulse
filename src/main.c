@@ -21,7 +21,7 @@ meta(generate_here)
     #include "base/base_platform_wasm.c"
 #else
 
-    // // TODO(felix): move embed into platform files after adding ability to parse #includes
+    // // TODO(F): move embed into platform files after adding ability to parse #includes
     // meta(embed "deps/Inter-4.1/InterVariable.ttf")
     // extern const char platform__font_ttf_chars[];
     // extern const u64 platform__font_ttf_size;
@@ -50,7 +50,6 @@ static void app_quit(Platform *platform) {
 }
 
 #include "graph.c"
-#include "queue.c"
 #include "car.c"
 #include "ppo.c"
 
@@ -324,7 +323,7 @@ static V2 screen_from_world(V2 world, V2 camera, f32 zoom, V2 screen_centre) {
     return result;
 }
 
-// NOTE(felix): brilliant source for public domain bitmap fonts: https://www.pentacom.jp/pentacom/bitfontmaker2/gallery/
+// NOTE(F): brilliant source for public domain bitmap fonts: https://www.pentacom.jp/pentacom/bitfontmaker2/gallery/
 
 static ui_Box *app_ui_push_header_panel(ui_Box *parent, const char *format, ...) {
     ui_Box *box = ui_push(&g.ui, parent, ui_Y | ui_Flag_DRAW_BACKGROUND | ui_Flag_DRAW_SHADOW | ui_Flag_DRAW_BORDER, &g.ui_idle_style, 0);
@@ -578,11 +577,11 @@ static void app_update_and_render(Platform *platform) {
     {
         text(tutorial_menubar, 0, "CityPulse");
         ui_spacer(ui, tutorial_menubar);
-        text(tutorial_menubar, 0, "by Nawwaf Aleisa, Seth David Kay, and Felix Ulmanu");
+        text(tutorial_menubar, 0, "A city-scale traffic simulation platform");
     }
     {
 
-        // TODO(felix): map selector button
+        // TODO(F): map selector button
 
         #if defined(BASE_PLATFORM_WINGDI) || defined(BASE_PLATFORM_WASM)
         {
@@ -769,7 +768,7 @@ static void app_update_and_render(Platform *platform) {
     }
 
     if (!paused) {
-        // TODO(felix): for determinism, the simulation_step should always run with the same dt (or up to a set limit that we establish doesn't break the simulation), and beyond that point we should run MORE steps per frame, rather than increasing dt more
+        // TODO(F): for determinism, the simulation_step should always run with the same dt (or up to a set limit that we establish doesn't break the simulation), and beyond that point we should run MORE steps per frame, rather than increasing dt more
 
         f32 step = g.simulation_speed * platform->frame.seconds_since_last_frame;
         simulation_step(&g.simulation, step);
@@ -967,7 +966,7 @@ static void app_update_and_render(Platform *platform) {
             {
                 PPO_Info ppo = g.ppo_info;
 
-                // TODO(felix): blue or orange background
+                // TODO(F): blue or orange background
                 Text_Flags reward_flags = ppo.rolling_avg_reward == 0.f ? Text_DISABLED : 0;
                 ui_Box *reward_part = ui_push(ui, ppo_panel, ui_Y, 0, 0);
                 {
@@ -977,7 +976,7 @@ static void app_update_and_render(Platform *platform) {
                 }
 
 
-                // TODO(felix): section background
+                // TODO(F): section background
                 ui_Box *observations = ui_push(ui, ppo_panel, ui_Y, &g.ui_idle_style, 0);
                 {
                     bool horizontal = ppo.decision_axis == 0;
@@ -1010,7 +1009,7 @@ static void app_update_and_render(Platform *platform) {
                 u64 collisions_recent_window = 0;
                 u64 collisions_previous_window = 0;
 
-                // TODO(felix): collisions plot
+                // TODO(F): collisions plot
 
                 text(info_part, 0, "Collisions total: %llu###cars collision total", g.simulation.collision_count);
 
@@ -1259,7 +1258,7 @@ static void app_update_and_render(Platform *platform) {
                 f32 length = link_length(g.graph, *link);
                 text(lane_panel, flags, "%.0f %s long###link length in panel", length, (int)floorf(length) == 1 ? "metre" : "metres");
 
-                // TODO(felix): tickboxes, radio buttons
+                // TODO(F): tickboxes, radio buttons
 
                 bool show_flags = false;
                 if (show_flags) {

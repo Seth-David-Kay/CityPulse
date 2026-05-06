@@ -1,6 +1,6 @@
 #define BASE_PLATFORM_WINGDI
 
-// TODO(felix): replace pragma comment(lib) with meta(link)
+// TODO(F): replace pragma comment(lib) with meta(link)
 
 #pragma comment(lib, "Dwmapi.lib")
 WIN32_CALL(long) DwmFlush(void);
@@ -219,7 +219,7 @@ static i64 window_procedure__(void *window, u32 message, u64 w, i64 l) {
             f32 dpi_1x = 96.f;
             frame->dpi_scale = (f32)GetDpiForWindow(window) / dpi_1x;
         } break;
-        case wm_getminmaxinfo: { // TODO(felix): not working. The goal is to not allow the window to become smaller than a certain size
+        case wm_getminmaxinfo: { // TODO(F): not working. The goal is to not allow the window to become smaller than a certain size
             MINMAXINFO *info = (MINMAXINFO *)l;
             int min_width = 100, min_height = 100;
             info->ptMinTrackSize.x = min_width;
@@ -265,8 +265,8 @@ static i64 window_procedure__(void *window, u32 message, u64 w, i64 l) {
             platform->real_window_size.y = (f32)WIN32__HIWORD(l);
         } break;
         case wm_sizing: {
-            // TODO(felix): handle redrawing here so that we're not blocked while resizing
-            // NOTE(felix): apparently there might be some problems with this and the better way to do it is for the thread with window events to be different than the application thread that submits draw calls and updates the program
+            // TODO(F): handle redrawing here so that we're not blocked while resizing
+            // NOTE(F): apparently there might be some problems with this and the better way to do it is for the thread with window events to be different than the application thread that submits draw calls and updates the program
         } break;
         default: break;
     }
@@ -428,7 +428,7 @@ static void program(void) {
             ensure(ok);
 
             #pragma comment(lib, "dwmapi.lib")
-            DwmFlush(); // TODO(felix): better way to "vsync"
+            DwmFlush(); // TODO(F): better way to "vsync"
         }
         ReleaseDC(platform.window, window_dc);
 

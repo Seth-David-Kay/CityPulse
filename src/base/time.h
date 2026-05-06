@@ -1,4 +1,4 @@
-// https://github.com/felix-u 2026-03-02
+// https://github.com/F-u 2026-03-02
 // Public domain. NO WARRANTY - use at your own risk.
 
 #if !defined(TIME_H)
@@ -10,7 +10,7 @@
 #elif defined(_WIN32)
     #define TIME_OS_WINDOWS
 #else
-    // NOTE(felix): it may be good to distinguish between non-Windows OSes
+    // NOTE(F): it may be good to distinguish between non-Windows OSes
     #define TIME_OS_POSIX
 #endif
 

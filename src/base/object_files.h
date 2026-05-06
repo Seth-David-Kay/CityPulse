@@ -1,4 +1,4 @@
-// https://github.com/felix-u 2026-02-11
+// https://github.com/F-u 2026-02-11
 // Public domain. NO WARRANTY - use at your own risk
 
 
@@ -104,7 +104,7 @@ enum {
     object_COFF_Section_Header_MEM_SHARED             = 0x10000000,
     object_COFF_Section_Header_MEM_EXECUTE            = 0x20000000,
     object_COFF_Section_Header_MEM_READ               = 0x40000000,
-    // NOTE(felix): this bypasses error "enumerator value is not representable in the underlying type". I suppose the anonymous enum is treated as a signed int while parsing
+    // NOTE(F): this bypasses error "enumerator value is not representable in the underlying type". I suppose the anonymous enum is treated as a signed int while parsing
     #define object_COFF_Section_Header_MEM_WRITE 0x80000000
 };
 
@@ -725,7 +725,7 @@ OBJECT_FUNCTION unsigned char *object_bundle(
         }
 
         object_MachO_File_Header file_header = {
-            // TODO(felix): make endianness and architecture configurable via flags
+            // TODO(F): make endianness and architecture configurable via flags
             .magic = object_MachO_File_Header_Magic_LITTLE_ENDIAN_64_BIT,
             .cpu_type = object_MachO_CPU_Type_ARM64,
             .cpu_subtype = object_MachO_CPU_Subtype_ARM_ALL,

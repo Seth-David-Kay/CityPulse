@@ -1,4 +1,4 @@
-// https://github.com/felix-u 2026-04-15
+// https://github.com/F-u 2026-04-15
 // Public domain. NO WARRANTY - use at your own risk.
 
 #if !defined(FS_H)
@@ -10,7 +10,7 @@
 #elif defined(_WIN32)
     #define FS_OS_WINDOWS
 #else
-    // NOTE(felix): it may be good to distinguish between non-Windows OSes
+    // NOTE(F): it may be good to distinguish between non-Windows OSes
     #define FS_OS_POSIX
 #endif
 
@@ -364,7 +364,7 @@ FS_FUNCTION fs_File fs_open(const char *path, fs_File_Flags flags) {
     _Bool read = !!(flags & fs_File_Flag_READ);
     _Bool write = !!(flags & fs_File_Flag_WRITE);
     FS_ASSERT(read || write);
-    FS_ASSERT(read ^ write); // TODO(felix): correctly handle read+write
+    FS_ASSERT(read ^ write); // TODO(F): correctly handle read+write
 
     #if defined(FS_OS_WINDOWS)
     {

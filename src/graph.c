@@ -73,8 +73,8 @@ typedef struct {
 	Node_Id to;
 	Link_Flags flags;
 	u8 intersection_id; //0 = none, 1+ = belongs to that intersection
-	// NOTE(felix): consider capacity field
-	// NOTE(felix): consider traversal_cost field (higher cost models curvy links)
+	// NOTE(F): consider capacity field
+	// NOTE(F): consider traversal_cost field (higher cost models curvy links)
 } Link;
 typedef Array(Link) Array_Link;
 
@@ -184,7 +184,7 @@ static f32 edge_weight(Graph graph, Node_Id from, Node_Id to) {
 	return edge_weight;
 }
 
-// TODO(felix): performance
+// TODO(F): performance
 static Node_Ids graph_pathfind(Arena *arena, Graph graph, Node_Id start, Node_Id end) {
 	Node_Ids path = { .data = arena_make(arena, graph.nodes.count, Node_Id) };
 	Arena scratch = *arena;

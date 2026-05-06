@@ -30,9 +30,9 @@ typedef struct {
     f32 speed;
     f32 max_speed;
     Node_Ids path;
-    // NOTE(felix): path_index needed?
+    // NOTE(F): path_index needed?
     f32 start_time;
-    // TODO(felix): make bit set for bools
+    // TODO(F): make bit set for bools
     bool is_active;
     bool should_remove;
     bool is_following;
@@ -70,7 +70,7 @@ static V2 car_position(Graph graph, Car car) {
 // Box-Müller (normal distribution)
 f32 rand_normal_dist(f32 mean, f32 stddev)
 {
-    // NOTE(felix): not sure if the comment immediately following is out of date after replacing libc rand() with our own prng.h functionality
+    // NOTE(F): not sure if the comment immediately following is out of date after replacing libc rand() with our own prng.h functionality
 
     // Because below we do a slight variation to not get 0 or 1 it's
     // 	not perfectly uniform, can change this by using normal box-muller
@@ -197,7 +197,7 @@ void simulation_step(Simulation_State* state, f32 dt) {
             if (state->simulation_time < car->start_time) continue;
 
             Graph *graph = state->graph;
-            // NOTE(felix): I don't know when it should be ok for this not to be true
+            // NOTE(F): I don't know when it should be ok for this not to be true
             assert(graph->entrances.count > 0 && graph->exits.count > 0);
 
             // pick a random entrance and exit for the car's path
@@ -282,7 +282,7 @@ void simulation_step(Simulation_State* state, f32 dt) {
             f32 max_free = MAX(free_speed, 0.1f);
             f32 base = car->speed / max_free;
 
-            // NOTE(felix): powf(base, 4.f), when base == 0, incorrectly gives 1.f on MSVC. This is the workaround
+            // NOTE(F): powf(base, 4.f), when base == 0, incorrectly gives 1.f on MSVC. This is the workaround
             f32 intermediate = base * base * base * base;
 
             f32 free_term = 1.f - intermediate;
