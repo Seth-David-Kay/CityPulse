@@ -577,8 +577,6 @@ static void app_update_and_render(Platform *platform) {
     }
     {
         text(tutorial_menubar, 0, "CityPulse");
-        ui_spacer(ui, tutorial_menubar);
-        text(tutorial_menubar, 0, "A city-scale traffic simulation platform");
     }
     {
 
