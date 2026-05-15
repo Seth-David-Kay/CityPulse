@@ -109,7 +109,6 @@ static const char *map_controls_text[] = {
     "the screen,  and using those same panels you",
     "are able to remove, add, or edit traffic lights",
     "and roads to create a fully custom network.",
-    "You can even download your custom network!",
     0,
 };
 
