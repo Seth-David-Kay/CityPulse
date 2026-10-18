@@ -4136,6 +4136,7 @@ static ui_Box *ui_pushv(ui_State *ui, ui_Box *parent, ui_Flags flags, const ui_S
         _Bool have_free_unkeyed_slot = ui->per_frame_unkeyed_boxes_index > UI_MAX_KEYED_BOXES;
         UI_ASSERT(have_free_unkeyed_slot);
         box = &ui->boxes[--ui->per_frame_unkeyed_boxes_index];
+        *box = (ui_Box){0};
         box_is_new = 1;
     }
 
@@ -4155,7 +4156,7 @@ static ui_Box *ui_pushv(ui_State *ui, ui_Box *parent, ui_Flags flags, const ui_S
         box->last_child = 0;
     }
 
-    if (style != 0) box->style = *style;
+    box->style = (style != 0) ? *style : (ui_Style){0};
 
     box->parent = parent;
     if (parent == 0) UI_ASSERT(ui->root == 0);
