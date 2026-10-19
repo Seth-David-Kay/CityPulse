@@ -71,22 +71,22 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    Env[Environment] -->|1: s_t| ActorNew[Actor-new θ]
+    Env[Environment] -->|1: s_t| ActorNew["Actor-new θ"]
     ActorNew -->|2: A_t| Env
-    Env -->|1: s_t| Tuple[(s_t, A_t, R_t, s_{t+1})]
+    Env -->|1: s_t| Tuple["(s_t, A_t, R_t, s_{t+1})"]
     ActorNew -->|2: A_t| Tuple
     Env -->|3: R_t, s_{t+1}| Tuple
 
     Tuple --> Buffer[(Experience Replay Buffer)]
-    Buffer -->|4: Mini-batch Samples| Critic[Critic ψ]
+    Buffer -->|4: Mini-batch Samples| Critic["Critic ψ"]
 
-    Critic -->|4: V_s_t, V_s_{t+1}| Advantage[A_hat_t]
-    Advantage -->|5| Loss[L_CLIP_θ]
+    Critic -->|4: V(s_t), V(s_{t+1})| Advantage["Â(t)"]
+    Advantage -->|5| Loss["L_CLIP(θ)"]
 
     Loss -->|6: Backpropagation| ActorNew
     Advantage -->|6: Backpropagation| Critic
 
-    ActorNew -->|7: Update| ActorOld[Actor-old θ_old]
+    ActorNew -->|7: Update| ActorOld["Actor-old θ_old"]
     ActorOld --> Advantage
 ```
 
