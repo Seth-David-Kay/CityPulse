@@ -1,4 +1,5 @@
-# NO AI USED IN CREATION OF CityPulse, ONLY AI CREATED
+# Now live at https://citypulse.sethdavidkay.com
+
 # Table of Contents
 
 | Section | Page |
@@ -18,6 +19,7 @@
 | &nbsp;&nbsp;&nbsp;&nbsp;b. Reward Computation | p. 20 |
 | &nbsp;&nbsp;&nbsp;&nbsp;c. Simulation | p. 20 |
 
+NO AI USED IN CREATION OF CityPulse, ONLY AI CREATED
 ---
 
 # Abstract
@@ -71,22 +73,22 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    Env[Environment] -->|1: s_t| ActorNew["Actor-new θ"]
-    ActorNew -->|2: A_t| Env
-    Env -->|1: s_t| Tuple["(s_t, A_t, R_t, s_{t+1})"]
-    ActorNew -->|2: A_t| Tuple
-    Env -->|3: R_t, s_{t+1}| Tuple
+    Env[Environment] -->|"1: s_t"| ActorNew["Actor-new θ"]
+    ActorNew -->|"2: A_t"| Env
+    Env -->|"1: s_t"| Tuple["(s_t, A_t, R_t, s_{t+1})"]
+    ActorNew -->|"2: A_t"| Tuple
+    Env -->|"3: R_t, s_{t+1}"| Tuple
 
     Tuple --> Buffer[(Experience Replay Buffer)]
-    Buffer -->|4: Mini-batch Samples| Critic["Critic ψ"]
+    Buffer -->|"4: Mini-batch Samples"| Critic["Critic ψ"]
 
-    Critic -->|4: V(s_t), V(s_{t+1})| Advantage["Â(t)"]
-    Advantage -->|5| Loss["L_CLIP(θ)"]
+    Critic -->|"4: V(s_t), V(s_{t+1})"| Advantage["Â(t)"]
+    Advantage -->|"5"| Loss["L_CLIP(θ)"]
 
-    Loss -->|6: Backpropagation| ActorNew
-    Advantage -->|6: Backpropagation| Critic
+    Loss -->|"6: Backpropagation"| ActorNew
+    Advantage -->|"6: Backpropagation"| Critic
 
-    ActorNew -->|7: Update| ActorOld["Actor-old θ_old"]
+    ActorNew -->|"7: Update"| ActorOld["Actor-old θ_old"]
     ActorOld --> Advantage
 ```
 
